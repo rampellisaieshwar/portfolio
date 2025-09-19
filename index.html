@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rampelli Sai Eshwar — AI/ML Engineer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="Rampelli Sai Eshwar — AI/ML Engineer. Interactive Portfolio with AI Twin." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root{
+      --bg: rgba(18,20,23,0.55); /* deep translucent */
+      --card: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.12);
+      --accent-start: rgba(102, 204, 255, 0.9); /* soft cyan */
+      --accent-end: rgba(153, 102, 255, 0.9); /* soft violet */
+      --muted: rgba(255,255,255,0.65);
+      --glass-strong: rgba(255,255,255,0.09);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+
+    /* iOS26-like frosted glass + translucency appearance */
+    body{
+      background: linear-gradient(180deg, rgba(8,10,12,1) 0%, rgba(12,14,17,1) 100%);
+      color: white;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
+      padding:40px 16px;
+    }
+
+    .container{ max-width:1100px; margin:0 auto; }
+
+    .frost {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px) saturate(120%);
+      -webkit-backdrop-filter: blur(12px) saturate(120%);
+      border-radius:18px;
+    }
+
+    .avatar{ width:140px; height:140px; border-radius:24px; object-fit:cover; box-shadow: 0 8px 30px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.06); }
+
+    .accent-btn{
+      background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+      color:rgba(4,6,8,0.95);
+      font-weight:700;
+      border-radius:12px;
+      padding:10px 16px;
+      display:inline-flex; gap:10px; align-items:center;
+      box-shadow: 0 6px 20px rgba(102,102,255,0.12);
+    }
+
+    .subtle{ color:var(--muted); }
+
+    .glass-card{ padding:18px; border-radius:14px; background:var(--card); border:1px solid var(--glass-border); }
+
+    a.link { color: #AEE3FF; text-decoration: none; font-weight:600 }
+
+    /* project image overlay style */
+    .proj-img{ height:160px; width:100%; object-fit:cover; border-radius:10px; }
+
+    /* subtle hover */
+    .proj:hover{ transform: translateY(-6px); transition: all 220ms cubic-bezier(.2,.9,.2,1); }
+
+    /* responsive tweaks */
+    @media (max-width:768px){ .avatar{ width:112px; height:112px; border-radius:16px; } }
+
+    /* AI Chat Styles */
+    .chat-container {
+      height: 500px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.2) transparent;
+    }
+    
+    .chat-container::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    .chat-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .chat-container::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+    }
+
+    .message {
+      margin-bottom: 16px;
+      animation: fadeInUp 0.3s ease-out;
+    }
+
+    .message.user {
+      text-align: right;
+    }
+
+    .message.assistant {
+      text-align: left;
+    }
+
+    .message-bubble {
+      display: inline-block;
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      word-wrap: break-word;
+    }
+
+    .message.user .message-bubble {
+      background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+      color: rgba(4,6,8,0.95);
+    }
+
+    .message.assistant .message-bubble {
+      background: var(--card);
+      border: 1px solid var(--glass-border);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+      animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-10px); }
+    }
+
+    /* Lab Cards */
+    .lab-card {
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .lab-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    /* Timeline */
+    .timeline-item {
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 40px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 0;
+      bottom: -40px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-start), var(--accent-end));
+    }
+
+    .timeline-item:last-child::before {
+      display: none;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-start);
+      border: 3px solid var(--bg);
+    }
+
+    /* Navigation */
+    .nav-item {
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-item:hover {
+      color: var(--accent-start);
+    }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+    }
+
+    /* Section transitions */
+    .section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.2, 0.9, 0.2, 1);
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <main class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Left column: Hero + contact -->
+      <section class="md:col-span-1 space-y-6">
+        <div class="frost p-6 flex flex-col items-center text-center">
+          <img class="avatar mb-4" src="me9.png" alt="Rampelli Sai Eshwar" />
+          <h1 class="text-2xl font-extrabold">Rampelli Sai Eshwar</h1>
+          <p class="subtle mt-1">AI/ML Engineer · Computer Vision & Multimodal LLMs</p>
+          <div class="mt-4 flex gap-3">
+            <a class="accent-btn" href="#work">Projects</a>
+            <a class="glass-card" href="#contact">Contact</a>
+          </div>
+          <p class="subtle text-sm mt-4">I build production-grade CV systems, optimize models for edge inference, and create LLM-powered agents to automate developer workflows.</p>
+        </div>
+
+        <div class="glass-card p-4">
+          <div class="text-sm subtle">Contact</div>
+          <div class="mt-2 text-sm">
+            <div><strong>Email:</strong> <a class="link" href="mailto:rampellisaieshwar@gmail.com">rampellisaieshwar@gmail.com</a></div>
+            <div class="mt-1"><strong>Phone:</strong> +91 6281095734</div>
+            <div class="mt-1"><strong>LinkedIn:</strong> <a class="link" href="https://www.linkedin.com/in/saieshwarrampelli/">saieshwarrampelli</a></div>
+          </div>
+        </div>
+
+        <div class="glass-card p-4">
+          <div class="text-sm subtle">Skills</div>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="glass-card text-xs px-3 py-1">Python</span>
+            <span class="glass-card text-xs px-3 py-1">PyTorch</span>
+            <span class="glass-card text-xs px-3 py-1">TensorFlow</span>
+            <span class="glass-card text-xs px-3 py-1">YOLO / SSD</span>
+            <span class="glass-card text-xs px-3 py-1">OpenCV</span>
+            <span class="glass-card text-xs px-3 py-1">Django</span>
+            <span class="glass-card text-xs px-3 py-1">LLaMA</span>
+            <span class="glass-card text-xs px-3 py-1">NumPy / pandas</span>
+          </div>
+        </div>
+
+        <div class="glass-card p-4">
+          <div class="text-sm subtle">Education</div>
+          <div class="mt-2 text-sm">
+            <div class="font-semibold">IIT Ropar — Minor in AI (Present)</div>
+            <div class="text-xs subtle mt-1">CGPA: 7.84(Till 1st Semester)</div>
+          </div>
+          <div class="mt-2 text-sm">
+            <div class="font-semibold">Kamala Institute of Technology & Science — B.Tech CSE (2020-2024)</div>
+            <div class="text-xs subtle mt-1">CGPA: 7.31</div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right column: Projects + About -->
+      <section class="md:col-span-2 space-y-6">
+        <div class="frost p-6">
+          <h2 class="text-xl font-semibold">Selected Projects</h2>
+          <p class="subtle mt-1">Problem → Approach → Impact — short and results focused.</p>
+          <div id="projects" class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+        </div>
+
+        <div class="glass-card p-6">
+          <h2 class="font-semibold text-lg">About Me</h2>
+          <p class="subtle mt-3 text-sm">Dynamic AI/ML engineer who converts research into production-ready systems. During my internship I worked on equestrian AI, real-time horse detection, segmentation, and tracking. I also built LLaMA-based agents to extract structured requirements and orchestrate workflows.</p>
+
+          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4 class="font-semibold">Experience</h4>
+              <p class="text-sm subtle mt-2">0101Digitall — AI/ML Developer Intern (Dec 2024 - Mar 2025). Focus: object detection, model optimization, LLaMA agents.</p>
+            </div>
+            <div>
+              <h4 class="font-semibold">Interests</h4>
+              <p class="text-sm subtle mt-2">Photography · Basketball · Exploring new technologies</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card p-6" id="contact">
+          <h2 class="font-semibold">Contact Me</h2>
+          <p class="subtle mt-2 text-sm">Email me directly or use the form below. I typically respond within a few days.</p>
+          <form id="contactForm" class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input name="name" required placeholder="Your name" class="p-3 bg-transparent border border-transparent rounded-lg" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04);" />
+            <input name="email" required placeholder="Your email" class="p-3 bg-transparent border border-transparent rounded-lg" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04);" />
+            <textarea name="message" required placeholder="Message" class="p-3 bg-transparent border border-transparent rounded-lg sm:col-span-2" style="height:120px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04);"></textarea>
+            <button class="sm:col-span-2 accent-btn" type="submit">Send message</button>
+          </form>
+        </div>
+
+        <footer class="text-center subtle text-xs mt-4">© <span id="year"></span> Rampelli Sai Eshwar — Built with a frosted iOS26 style</footer>
+      </section>
+    </main>
+  </div>
+
+  <template id="projTpl">
+    <div class="proj glass-card p-3">
+      <img class="proj-img" src="" alt="project" />
+      <h3 class="mt-3 font-semibold"></h3>
+      <p class="subtle text-sm mt-1"></p>
+      <div class="mt-3 flex items-center justify-between">
+        <a class="link" href="#">View</a>
+        <span class="text-xs subtle tech"></span>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    const projects = [
+      {title: 'Equestrian AI — Horse Motion Analysis', img: 'https://via.placeholder.com/720x400?text=Equestrian+AI', desc: 'Real-time horse detection, segmentation, gait analysis and Kalman-filtered tracking inside user-defined arenas.', tech: 'PyTorch · YOLO · OpenCV'},
+      {title: 'Vidlingo — Auto Subtitle Generator', img: 'https://via.placeholder.com/720x400?text=Vidlingo', desc: 'Extracts audio from video and generates synchronized subtitles with translation support using Google Speech-to-Text and Translate APIs.', tech: 'Python · Google APIs'},
+      {title: 'Virtual Blackboard', img: 'https://via.placeholder.com/720x400?text=Virtual+Blackboard', desc: 'Hand-gesture driven virtual writing surface using MediaPipe + OpenCV.', tech: 'OpenCV · MediaPipe'},
+      {title: 'Universal Search & Requirements Agent', img: 'https://via.placeholder.com/720x400?text=Requirement+Agent', desc: 'LLaMA-based agent to extract structured user stories from unstructured text and orchestrate pre-built APIs.', tech: 'LLaMA · Django'}
+    ];
+
+    const grid = document.getElementById('projects');
+    const tpl = document.getElementById('projTpl');
+    projects.forEach(p => {
+      const el = tpl.content.cloneNode(true);
+      el.querySelector('img').src = p.img;
+      el.querySelector('h3').textContent = p.title;
+      el.querySelector('p').textContent = p.desc;
+      el.querySelector('.tech').textContent = p.tech;
+      grid.appendChild(el);
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('This is a demo contact form — configure an endpoint or use Formspree/Netlify Forms for production.');
+    });
+  </script>
+</body>
+</html>
