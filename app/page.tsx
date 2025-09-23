@@ -4,8 +4,7 @@ import { Hero } from '@/components/sections/Hero'
 import { AITwin } from '@/components/sections/AITwin'
 import { InteractiveLabs } from '@/components/sections/InteractiveLabs'
 import { GrowthTimeline } from '@/components/sections/GrowthTimeline'
-import { BlogNotes } from '@/components/sections/BlogNotes'
-
+// import { BlogNotes } from '@/components/sections/BlogNotes'
 export default function Home() {
   return (
     <div className="pt-16">
@@ -13,7 +12,7 @@ export default function Home() {
       <AITwin />
       <InteractiveLabs />
       <GrowthTimeline />
-      <BlogNotes />
+      {/* <BlogNotes /> */}
     </div>
   )
 }
