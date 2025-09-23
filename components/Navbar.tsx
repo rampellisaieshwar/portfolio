@@ -10,7 +10,7 @@ const navItems = [
   { name: 'AI Twin', href: '#ai-twin' },
   { name: 'Labs', href: '#labs' },
   { name: 'Timeline', href: '#timeline' },
-  { name: 'Blog', href: '#blog' },
+  // { name: 'Blog', href: '#blog' },
 ]
 
 export function Navbar() {
